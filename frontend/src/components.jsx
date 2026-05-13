@@ -161,13 +161,13 @@ function Footer({ mobile = false }) {
           </div>
           <div>
             <div className="fpc-footer-h">Контакты</div>
-            <a href="mailto:hello@forgottenphotocards.ru">hello@forgottenphotocards.ru</a>
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+            <a href="mailto:hello@zabytye.ru">oleg.yakushev.work@gmail.com</a>
+            <a href="https://github.com/BrikozO" target="_blank" rel="noopener">GitHub</a>
           </div>
           <div>
             <div className="fpc-footer-h">Сайт</div>
-            <a href="#">forgottenphotocards.ru</a>
-            <span className="fpc-footer-quiet">Все права на фотографии — у автора</span>
+            <a href="https://zabytye.ru">zabytye.ru</a>
+            <span className="fpc-footer-quiet">By Oleg Iakushev ©</span>
           </div>
         </div>
       </div>

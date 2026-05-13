@@ -23,9 +23,9 @@ Drop the cert pair into that directory before `docker compose up`.
 For Let's Encrypt the typical flow is:
 
 ```
-sudo certbot certonly --webroot -w /var/www/certbot -d example.com
-cp /etc/letsencrypt/live/example.com/fullchain.pem ./nginx/certs/
-cp /etc/letsencrypt/live/example.com/privkey.pem  ./nginx/certs/
+sudo certbot certonly --webroot -w /var/www/certbot -d zabytye.ru -d www.zabytye.ru
+cp /etc/letsencrypt/live/zabytye.ru/fullchain.pem ./nginx/certs/
+cp /etc/letsencrypt/live/zabytye.ru/privkey.pem  ./nginx/certs/
 ```
 
 The ACME webroot `/var/www/certbot` is also exposed by `prod.conf` (for
