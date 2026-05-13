@@ -1,0 +1,45 @@
+# Dev stack: nginx → {frontend, backend}, plain HTTP on :80.
+#
+# For prod (TLS on 443) overlay docker-compose.prod.yml:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: fpc-backend
+    expose:
+      - "8000"
+    volumes:
+      - backend_data:/srv/backend/data
+    environment:
+      FPC_DATABASE_URL: sqlite+aiosqlite:////srv/backend/data/fpc.db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fpc-frontend
+    expose:
+      - "80"
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    container_name: fpc-nginx
+    ports:
+      - "80:80"
+    # Read-only mount of the backend's data volume so nginx can serve scraped
+    # post photos directly (see `location /media/` in dev.conf / prod.conf).
+    volumes:
+      - backend_data:/srv/backend/data:ro
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  backend_data:

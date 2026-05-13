@@ -1,0 +1,185 @@
+/* Carousel variants */
+
+/* Shared stage */
+.car-stage {
+  position: relative;
+  background: var(--bg-elev);
+  aspect-ratio: 3 / 2;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.car-img {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: 100%;
+  object-fit: contain;
+  animation: car-fade 0.35s ease;
+}
+@keyframes car-fade { from { opacity: 0.2 } to { opacity: 1 } }
+
+.car-arrow {
+  position: absolute;
+  top: 50%;
+  width: 38px; height: 38px;
+  background: rgba(11,11,11,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.2s, background 0.2s, transform 0.15s;
+  transform: translateY(-50%);
+}
+.car-prev { left: 16px; }
+.car-next { right: 16px; }
+.car-arrow:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+.car-stage:not(:hover) .car-arrow { opacity: 0.65; }
+
+.car-counter {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(11,11,11,0.7);
+  backdrop-filter: blur(6px);
+  padding: 5px 10px;
+  color: var(--text);
+  border-radius: 2px;
+  display: flex; gap: 6px;
+}
+.car-counter-sep { color: var(--text-mute); }
+
+/* Variant A — arrows + thumbs */
+.car-arrows { display: flex; flex-direction: column; gap: 14px; }
+.car-thumbs {
+  display: flex; gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+.car-thumbs::-webkit-scrollbar { display: none; }
+.car-thumb {
+  flex: 0 0 auto;
+  width: 72px; height: 72px;
+  background: var(--bg-elev);
+  border: 1px solid transparent;
+  padding: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0.5;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.car-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.car-thumb:hover { opacity: 0.85; }
+.car-thumb[data-active="true"] { opacity: 1; border-color: var(--accent); }
+
+/* Variant B — dots */
+.car-dots { display: flex; flex-direction: column; gap: 18px; }
+.car-dots-row {
+  display: flex; justify-content: center; gap: 6px;
+}
+.car-dot {
+  width: 28px; height: 3px;
+  background: var(--line-strong);
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  transition: background 0.15s, width 0.2s;
+}
+.car-dot[data-active="true"] { background: var(--text); width: 48px; }
+.car-dot:hover { background: var(--text-dim); }
+
+/* Variant C — vertical */
+.car-vertical { display: flex; flex-direction: column; gap: 18px; }
+.car-v-item {
+  margin: 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.car-v-item img {
+  width: 100%; height: auto; display: block;
+  background: var(--bg-elev);
+  border-radius: 2px;
+}
+.car-v-item figcaption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  letter-spacing: 0.06em;
+}
+
+/* Variant D — grid + lightbox */
+.car-grid-wrap { width: 100%; }
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+  gap: 6px;
+}
+@media (max-width: 768px) {
+  .car-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+}
+.car-grid-cell {
+  position: relative;
+  padding: 0; border: 0;
+  background: var(--bg-elev);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.car-grid-cell[data-portrait="1"] { grid-row: span 2; }
+.car-grid-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.car-grid-cell:hover img { transform: scale(1.04); }
+.car-grid-no {
+  position: absolute; top: 8px; left: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text);
+  background: rgba(11,11,11,0.7);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.car-lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+  padding: 56px 80px;
+  animation: car-fade 0.2s ease;
+}
+.car-lightbox-inner {
+  position: relative;
+  max-width: 100%; max-height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.car-lightbox-inner img {
+  max-width: 100%; max-height: calc(100vh - 112px);
+  object-fit: contain;
+}
+.car-lightbox-meta {
+  position: absolute; bottom: -36px; left: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+.car-lightbox-x {
+  position: absolute; top: -42px; right: 0;
+  background: none; border: 0; color: var(--text);
+  padding: 8px;
+}
+.car-lightbox-prev,
+.car-lightbox-next {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.car-lightbox-prev { left: 20px; }
+.car-lightbox-next { right: 20px; }
+.car-lightbox-prev:hover, .car-lightbox-next:hover { background: var(--text); color: var(--bg); }

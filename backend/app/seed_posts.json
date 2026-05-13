@@ -1,0 +1,222 @@
+[
+  {
+    "id": 305,
+    "title": "Найденная плёнка",
+    "type": "film",
+    "date": "2024-09-12",
+    "description": "Плёнка лежала в столе три года. Что снято и где — уже не вспомнить.",
+    "views": 41,
+    "reactions": {"❤": 6, "🤔": 3},
+    "photos": [
+      {"src": "https://picsum.photos/seed/old-1/1500/1000", "w": 1500, "h": 1000, "alt": "Old roll 1"},
+      {"src": "https://picsum.photos/seed/old-2/1500/1000", "w": 1500, "h": 1000, "alt": "Old roll 2"},
+      {"src": "https://picsum.photos/seed/old-3/1500/1000", "w": 1500, "h": 1000, "alt": "Old roll 3"}
+    ]
+  },
+  {
+    "id": 312,
+    "title": "Из телефона",
+    "type": "digital",
+    "date": "2024-10-04",
+    "time": "12:10",
+    "description": "",
+    "views": 29,
+    "reactions": {"❤": 4, "🤍": 2},
+    "photos": [
+      {"src": "https://picsum.photos/seed/phone-1/1500/1000", "w": 1500, "h": 1000, "alt": "Phone 1"},
+      {"src": "https://picsum.photos/seed/phone-2/1500/1000", "w": 1500, "h": 1000, "alt": "Phone 2"}
+    ]
+  },
+  {
+    "id": 320,
+    "title": "Калининград",
+    "type": "digital",
+    "date": "2024-10-22",
+    "time": "17:45",
+    "location": "Калининград",
+    "description": "Кирпич, готика, балтийский ветер. День без штатива.",
+    "camera": "Canon EOS 650D",
+    "lens": "Canon EF-S 18-55mm f/3.5-5.6",
+    "views": 54,
+    "reactions": {"❤": 7, "🔥": 4, "🏆": 1},
+    "photos": [
+      {"src": "https://picsum.photos/seed/kgd-1/1500/1000", "w": 1500, "h": 1000, "alt": "Kaliningrad 1"},
+      {"src": "https://picsum.photos/seed/kgd-2/1500/1000", "w": 1500, "h": 1000, "alt": "Kaliningrad 2"},
+      {"src": "https://picsum.photos/seed/kgd-3/1500/1000", "w": 1500, "h": 1000, "alt": "Kaliningrad 3"},
+      {"src": "https://picsum.photos/seed/kgd-4/1000/1500", "w": 1000, "h": 1500, "alt": "Kaliningrad 4"}
+    ]
+  },
+  {
+    "id": 327,
+    "title": "Владивосток",
+    "type": "film",
+    "date": "2024-11-09",
+    "time": "08:30",
+    "location": "Владивосток",
+    "description": "Туман над бухтой, мосты в дымке, мокрая брусчатка.",
+    "camera": "Fujica ST-801",
+    "film": "Kodak Gold 200",
+    "views": 67,
+    "reactions": {"❤": 9, "🔥": 5, "😍": 2},
+    "photos": [
+      {"src": "https://picsum.photos/seed/vlad-1/1500/1000", "w": 1500, "h": 1000, "alt": "Vladivostok 1"},
+      {"src": "https://picsum.photos/seed/vlad-2/1500/1000", "w": 1500, "h": 1000, "alt": "Vladivostok 2"},
+      {"src": "https://picsum.photos/seed/vlad-3/1000/1500", "w": 1000, "h": 1500, "alt": "Vladivostok 3"}
+    ]
+  },
+  {
+    "id": 334,
+    "title": "Ереван",
+    "type": "film",
+    "date": "2024-12-18",
+    "time": "20:35",
+    "location": "Armenia",
+    "description": "Зимний Ереван — тёплый камень, холодный воздух, тихие улицы между двух кофеен.",
+    "camera": "Fujica ST-801",
+    "lens": "SMC Takumar 50mm f/1.4",
+    "film": "Film Never Die Sora 200",
+    "views": 73,
+    "reactions": {"❤‍🔥": 7, "❤": 5, "🔥": 5, "😍": 1, "🏆": 1},
+    "photos": [
+      {"src": "https://picsum.photos/seed/erevan-1/1500/1000", "w": 1500, "h": 1000, "alt": "Yerevan 1"},
+      {"src": "https://picsum.photos/seed/erevan-2/1500/1000", "w": 1500, "h": 1000, "alt": "Yerevan 2"},
+      {"src": "https://picsum.photos/seed/erevan-3/1000/1500", "w": 1000, "h": 1500, "alt": "Yerevan 3"},
+      {"src": "https://picsum.photos/seed/erevan-4/1500/1000", "w": 1500, "h": 1000, "alt": "Yerevan 4"}
+    ]
+  },
+  {
+    "id": 342,
+    "title": "Гарни и Гегард",
+    "type": "film",
+    "date": "2025-01-09",
+    "time": "18:10",
+    "location": "Armenia",
+    "description": "Каньон, языческий храм и пещерный монастырь — день, который не помещался в один кадр.",
+    "camera": "Fujica ST-801",
+    "lens": "SMC Takumar 50mm f/1.4",
+    "film": "Alien Film 5207 250D",
+    "views": 63,
+    "reactions": {"❤": 8, "❤‍🔥": 5, "🔥": 4, "🏆": 1},
+    "photos": [
+      {"src": "https://picsum.photos/seed/garni-1/1500/1000", "w": 1500, "h": 1000, "alt": "Garni 1"},
+      {"src": "https://picsum.photos/seed/garni-2/1500/1000", "w": 1500, "h": 1000, "alt": "Garni 2"},
+      {"src": "https://picsum.photos/seed/garni-3/1500/1000", "w": 1500, "h": 1000, "alt": "Garni 3"}
+    ]
+  },
+  {
+    "id": 348,
+    "title": "Крыши Петербурга",
+    "type": "film",
+    "date": "2025-02-02",
+    "time": "16:48",
+    "location": "Санкт-Петербург",
+    "description": "Серый день, низкое небо, ничего лишнего.",
+    "camera": "Fujica ST-801",
+    "lens": "SMC Takumar 55mm f/1.8",
+    "film": "Kodak Tri-X 400",
+    "views": 88,
+    "reactions": {"❤": 12, "🔥": 6, "🤍": 3},
+    "photos": [
+      {"src": "https://picsum.photos/seed/spb-1/1500/1000", "w": 1500, "h": 1000, "alt": "SPb 1"},
+      {"src": "https://picsum.photos/seed/spb-2/1500/1000", "w": 1500, "h": 1000, "alt": "SPb 2"},
+      {"src": "https://picsum.photos/seed/spb-3/1500/1000", "w": 1500, "h": 1000, "alt": "SPb 3"},
+      {"src": "https://picsum.photos/seed/spb-4/1000/1500", "w": 1000, "h": 1500, "alt": "SPb 4"}
+    ]
+  },
+  {
+    "id": 351,
+    "title": "Москва, друзья",
+    "type": "digital",
+    "date": "2025-02-14",
+    "time": "21:02",
+    "location": "Москва",
+    "description": "Зимний вечер на квартире — кадры между разговорами, без постановки.",
+    "camera": "Canon EOS 650D",
+    "lens": "Canon EF 35mm f/2",
+    "models": ["Vladimir", "Polina"],
+    "views": 43,
+    "reactions": {"❤": 8, "🔥": 3, "🏆": 2, "🍾": 1},
+    "photos": [
+      {"src": "https://picsum.photos/seed/moscow-1/1500/1000", "w": 1500, "h": 1000, "alt": "Moscow 1"},
+      {"src": "https://picsum.photos/seed/moscow-2/1000/1500", "w": 1000, "h": 1500, "alt": "Moscow 2"},
+      {"src": "https://picsum.photos/seed/moscow-3/1500/1000", "w": 1500, "h": 1000, "alt": "Moscow 3"}
+    ]
+  },
+  {
+    "id": 356,
+    "title": "Тбилисские дворы",
+    "type": "film",
+    "date": "2025-03-07",
+    "time": "14:20",
+    "location": "Грузия",
+    "description": "Балкончики, виноград, кошки — то, ради чего возвращаешься.",
+    "camera": "Fujica ST-801",
+    "lens": "SMC Takumar 50mm f/1.4",
+    "film": "Kodak Portra 400",
+    "views": 102,
+    "reactions": {"❤": 14, "🔥": 9, "❤‍🔥": 4, "😍": 2},
+    "photos": [
+      {"src": "https://picsum.photos/seed/tbilisi-1/1500/1000", "w": 1500, "h": 1000, "alt": "Tbilisi 1"},
+      {"src": "https://picsum.photos/seed/tbilisi-2/1500/1000", "w": 1500, "h": 1000, "alt": "Tbilisi 2"},
+      {"src": "https://picsum.photos/seed/tbilisi-3/1000/1500", "w": 1000, "h": 1500, "alt": "Tbilisi 3"}
+    ]
+  },
+  {
+    "id": 360,
+    "title": "Анна",
+    "type": "digital",
+    "date": "2025-03-21",
+    "time": "19:55",
+    "location": "Москва",
+    "description": "Короткая съёмка после работы, естественный свет, окно во двор.",
+    "camera": "Canon EOS 650D",
+    "lens": "Helios 44-2 58mm f/2",
+    "models": ["Anna"],
+    "views": 58,
+    "reactions": {"❤": 11, "❤‍🔥": 4, "🔥": 2},
+    "photos": [
+      {"src": "https://picsum.photos/seed/anna-1/1000/1500", "w": 1000, "h": 1500, "alt": "Anna 1"},
+      {"src": "https://picsum.photos/seed/anna-2/1000/1500", "w": 1000, "h": 1500, "alt": "Anna 2"},
+      {"src": "https://picsum.photos/seed/anna-3/1500/1000", "w": 1500, "h": 1000, "alt": "Anna 3"}
+    ]
+  },
+  {
+    "id": 364,
+    "title": "Казань, ночь",
+    "type": "film",
+    "date": "2025-04-02",
+    "time": "23:18",
+    "location": "Казань",
+    "description": "Кремль, длинные выдержки, без штатива — поэтому всё немного шевелится.",
+    "camera": "Fujica ST-801",
+    "lens": "SMC Takumar 50mm f/1.4",
+    "film": "Cinestill 800T",
+    "views": 91,
+    "reactions": {"❤": 13, "🔥": 8, "❤‍🔥": 3},
+    "photos": [
+      {"src": "https://picsum.photos/seed/kazan-1/1500/1000", "w": 1500, "h": 1000, "alt": "Kazan 1"},
+      {"src": "https://picsum.photos/seed/kazan-2/1500/1000", "w": 1500, "h": 1000, "alt": "Kazan 2"},
+      {"src": "https://picsum.photos/seed/kazan-3/1500/1000", "w": 1500, "h": 1000, "alt": "Kazan 3"}
+    ]
+  },
+  {
+    "id": 369,
+    "title": "Студия, Катя",
+    "type": "digital",
+    "date": "2025-04-19",
+    "time": "15:00",
+    "location": "Москва",
+    "description": "Час в студии, два света, никакого ретуша.",
+    "camera": "Canon EOS 650D",
+    "lens": "Canon EF 50mm f/1.8 STM",
+    "models": ["Katya"],
+    "views": 76,
+    "reactions": {"❤": 15, "🤍": 5, "❤‍🔥": 2},
+    "photos": [
+      {"src": "https://picsum.photos/seed/katya-1/1000/1500", "w": 1000, "h": 1500, "alt": "Katya 1"},
+      {"src": "https://picsum.photos/seed/katya-2/1000/1500", "w": 1000, "h": 1500, "alt": "Katya 2"},
+      {"src": "https://picsum.photos/seed/katya-3/1000/1500", "w": 1000, "h": 1500, "alt": "Katya 3"},
+      {"src": "https://picsum.photos/seed/katya-4/1500/1000", "w": 1500, "h": 1000, "alt": "Katya 4"}
+    ]
+  }
+]

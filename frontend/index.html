@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- nginx serves /index.html as the SPA fallback for any path, so a visit
+       to e.g. /docs/1123/23 would resolve relative <script src="src/api.js">
+       to /docs/1123/src/api.js (404), breaking the boot. `<base href="/">`
+       anchors all relative URLs to the site root regardless of pathname. -->
+  <base href="/"/>
+  <title>Забытые Фотокарточки · Forgotten Photocards</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/styles-base.css"/>
+  <link rel="stylesheet" href="src/styles-feed.css"/>
+  <link rel="stylesheet" href="src/styles-post.css"/>
+  <link rel="stylesheet" href="src/styles-carousel.css"/>
+  <link rel="stylesheet" href="src/styles-about.css"/>
+
+  <style>
+    /* Loading + error screens shown before/around the React mount */
+    .fpc-boot {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 14px;
+      background: #f0eee9;
+      color: #29261b;
+      font: 13px/1.4 "JetBrains Mono", ui-monospace, monospace;
+      letter-spacing: 0.04em;
+      z-index: 9999;
+    }
+    .fpc-boot[data-state="error"] { color: #8a1f1f; }
+    .fpc-boot .ring {
+      width: 22px; height: 22px;
+      border: 1.5px solid rgba(41,38,27,.18);
+      border-top-color: #29261b;
+      border-radius: 50%;
+      animation: fpcSpin .9s linear infinite;
+    }
+    .fpc-boot small {
+      opacity: .55;
+      font-size: 11px;
+      max-width: 320px;
+      text-align: center;
+    }
+    @keyframes fpcSpin { to { transform: rotate(360deg); } }
+  </style>
+
+  <!--
+    Runtime configuration.
+
+    By default the frontend calls "/api" on the same origin. In docker-compose
+    this is nginx → backend. If you serve the SPA from another origin, override:
+
+        window.__API_BASE__ = "https://api.example.com";
+
+    You can also inject this at deploy time (envsubst / a small entrypoint
+    script in the nginx container that rewrites this line based on env vars).
+  -->
+  <script>
+    window.__API_BASE__ = "/api";
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <div id="boot" class="fpc-boot" data-state="loading">
+    <div class="ring"></div>
+    <div>Загружаем архив…</div>
+  </div>
+
+  <!-- API client + kickoff. Loaded parser-blocking (before React + bundle)
+       so /api/* fetches start as soon as possible, in parallel with the
+       deferred React/bundle downloads. api.js is plain JS, ~2KB. -->
+  <script src="src/api.js"></script>
+  <script>
+    window.__fpcBoot = Promise.all([
+      window.loadPosts(),
+      window.loadChannel(),
+      window.loadAuthor(),
+    ]);
+  </script>
+
+  <!-- React production builds. UMDs that expose React / ReactDOM globals,
+       consumed by the pre-built /app.js bundle (esbuild transpile, see
+       frontend/Dockerfile). `defer` so they don't block HTML parsing. -->
+  <script defer src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script>
+  <script defer src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+
+  <!-- App bundle: tweaks-panel + all JSX modules + boot, concatenated and
+       transpiled to a single minified file at image-build time (see
+       frontend/Dockerfile). Classic-script load order is implicit (sources
+       are concatenated in their original sequence). Deferred so it runs
+       after React and after DOMContentLoaded. -->
+  <script defer src="/app.js"></script>
+
+</body>
+</html>

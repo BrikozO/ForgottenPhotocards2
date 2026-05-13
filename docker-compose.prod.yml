@@ -1,0 +1,22 @@
+# Prod overlay — swaps the nginx image for the TLS-terminating variant
+# and exposes 443. Cert pair must exist at ./nginx/certs/fullchain.pem,
+# ./nginx/certs/privkey.pem before this is brought up.
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs:ro
+      # Compose overlays replace (not merge) list fields, so we have to
+      # restate backend_data here too — otherwise /media/ 404s in prod.
+      - backend_data:/srv/backend/data:ro
+      # Uncomment if you renew with certbot --webroot:
+      # - ./nginx/certbot:/var/www/certbot:ro

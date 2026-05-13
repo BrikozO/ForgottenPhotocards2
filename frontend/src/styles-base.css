@@ -1,0 +1,242 @@
+/* Base styles + design tokens for Forgotten Photocards.
+   Dark, neutral palette. Modern minimalism — grotesk, clean grids, photo-central. */
+
+:root {
+  --bg: #0B0B0B;
+  --bg-elev: #141414;
+  --bg-elev-2: #1A1A1A;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --text: #F2EEE6;
+  --text-dim: #B8B2A8;
+  --text-mute: #6E6862;
+  --accent: #D9C8A8;
+  --accent-fg: #0B0B0B;
+
+  --font-title: "Space Grotesk", system-ui, sans-serif;
+  --font-body:  "Space Grotesk", system-ui, sans-serif;
+  --font-mono:  "JetBrains Mono", ui-monospace, monospace;
+
+  --title-w: 500;
+  --title-track: -0.02em;
+  --logo-track: 0.18em;
+  --logo-w: 500;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 14px;
+
+  --container: 1320px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+a:hover { color: var(--accent); }
+
+/* Mono caption helper */
+.mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ───── Layout shell ────────────────────────────────────────── */
+.fpc-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.fpc-main {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ───── Header ──────────────────────────────────────────────── */
+.fpc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 22px var(--gutter) 18px;
+  border-bottom: 1px solid var(--line);
+}
+.fpc-logo-btn {
+  background: none; border: 0; padding: 0;
+  display: flex; align-items: center;
+}
+.fpc-logo {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text);
+}
+.fpc-logo-mark {
+  font-family: var(--font-title);
+  font-weight: var(--logo-w);
+  letter-spacing: var(--logo-track);
+  font-size: 13px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.fpc-logo-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
+  margin-top: 5px;
+  text-transform: lowercase;
+}
+.fpc-logo[data-compact="1"] .fpc-logo-mark { font-size: 11.5px; }
+
+.fpc-nav {
+  display: flex; align-items: center; gap: 2px;
+}
+.fpc-nav button {
+  background: none; border: 0;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--text-dim);
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  transition: color 0.15s, background 0.15s;
+}
+.fpc-nav button:hover { color: var(--text); }
+.fpc-nav button[data-active="true"] {
+  color: var(--text);
+  background: rgba(255,255,255,0.05);
+}
+
+.fpc-header-right {
+  display: flex; align-items: center; gap: 16px;
+}
+.fpc-counts {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+  display: flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+}
+.fpc-counts b { color: var(--text-dim); font-weight: 500; }
+.fpc-dot { color: var(--text-mute); opacity: 0.5; }
+
+.fpc-tg-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--text);
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 0;
+  transition: transform 0.15s, background 0.15s;
+}
+.fpc-tg-btn:hover { background: var(--accent); color: var(--bg); }
+.fpc-tg-btn[data-compact="1"] { padding: 8px 12px; font-size: 12px; }
+.fpc-tg-block { width: 100%; justify-content: center; padding: 14px 16px; }
+
+.fpc-burger {
+  background: none; border: 0; padding: 8px;
+  color: var(--text);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* Mobile menu */
+.fpc-mobile-menu {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.fpc-mobile-menu-card {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 280px;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--line);
+  padding: 22px 22px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.fpc-mobile-menu-head {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.fpc-mobile-close {
+  background: none; border: 0; color: var(--text-dim); padding: 6px;
+}
+.fpc-mobile-nav { display: flex; flex-direction: column; gap: 2px; }
+.fpc-mobile-nav button {
+  text-align: left;
+  background: none; border: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text-dim);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.fpc-mobile-nav button[data-active="true"] { color: var(--text); }
+
+/* ───── Footer ──────────────────────────────────────────────── */
+.fpc-footer {
+  margin-top: 80px;
+  border-top: 1px solid var(--line);
+  padding: 48px 0 36px;
+}
+.fpc-footer-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+}
+.fpc-footer-brand { display: flex; flex-direction: column; gap: 18px; }
+.fpc-footer-by {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mute);
+}
+.fpc-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.fpc-footer-h {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-mute);
+  margin-bottom: 12px;
+}
+.fpc-footer-cols a,
+.fpc-footer-cols span {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  padding: 4px 0;
+}
+.fpc-footer-cols a:hover { color: var(--text); }
+.fpc-footer-quiet { color: var(--text-mute) !important; font-size: 11.5px !important; }
+
+@media (max-width: 768px) {
+  .fpc-footer-inner { grid-template-columns: 1fr; gap: 28px; }
+  .fpc-footer-cols { grid-template-columns: 1fr 1fr; gap: 24px; }
+}

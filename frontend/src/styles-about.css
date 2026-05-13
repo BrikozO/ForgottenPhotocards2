@@ -1,0 +1,56 @@
+/* About page + remaining bits */
+
+.fpc-about-page {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 64px;
+  padding: 56px 0 72px;
+}
+@media (max-width: 900px) {
+  .fpc-about-page { grid-template-columns: 1fr; gap: 32px; padding: 32px 0; }
+}
+.fpc-about-bio-lg {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  max-width: 540px;
+  margin: 0 0 16px;
+  text-wrap: pretty;
+}
+.fpc-about-right .fpc-post-specs {
+  border-top: 1px solid var(--line-strong);
+}
+.fpc-about-right .fpc-post-spec dt { width: 110px; }
+
+/* Tweaks hint text */
+.fpc-tweak-hint {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: rgba(41,38,27,.5);
+  line-height: 1.4;
+  padding: 8px 0 0;
+}
+
+/* Compact tweaks values inside this design */
+.twk-panel {
+  /* Re-skin slightly to match the dark aesthetic when in light card */
+}
+
+/* Body padding under header */
+body { padding-top: 0; }
+
+/* Selection */
+::selection { background: var(--accent); color: var(--bg); }
+
+/* Scroll bars (subtle) */
+* { scrollbar-color: rgba(255,255,255,0.15) transparent; scrollbar-width: thin; }
+
+/* Mobile: tighter header + hide nav since burger handles it */
+@media (max-width: 768px) {
+  .fpc-header { padding: 18px var(--gutter) 14px; gap: 12px; }
+  .fpc-counts { display: none; }
+  .fpc-toolbar { padding: 18px 0 12px; }
+  .fpc-filters { overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .fpc-filters::-webkit-scrollbar { display: none; }
+  .fpc-filters button { flex-shrink: 0; }
+}
