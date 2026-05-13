@@ -41,6 +41,21 @@
   line-height: 1.55;
   margin: 0;
 }
+.fpc-hero-quote {
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.5;
+  border-left: 2px solid var(--text-mute);
+  padding-left: 16px;
+}
+.fpc-hero-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--text-mute);
+  letter-spacing: 0.02em;
+}
 .fpc-hero-side {
   display: flex; flex-direction: column;
   align-items: flex-end;

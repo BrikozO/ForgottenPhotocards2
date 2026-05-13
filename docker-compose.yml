@@ -4,6 +4,22 @@
 #   docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 
 services:
+  # VLESS → local HTTP proxy on the docker network. Backend uses it via
+  # HTTPS_PROXY to reach t.me from regions where it is blocked.
+  #
+  # xray/config.json is gitignored. Copy xray/config.example.json to
+  # xray/config.json and fill in the VLESS credentials before bringing
+  # this stack up (or scp the populated config to the server out-of-band).
+  xray:
+    image: ghcr.io/xtls/xray-core:latest
+    container_name: fpc-xray
+    command: ["run", "-c", "/etc/xray/config.json"]
+    volumes:
+      - ./xray/config.json:/etc/xray/config.json:ro
+    expose:
+      - "1080"
+    restart: unless-stopped
+
   backend:
     build:
       context: .
@@ -15,6 +31,13 @@ services:
       - backend_data:/srv/backend/data
     environment:
       FPC_DATABASE_URL: sqlite+aiosqlite:////srv/backend/data/fpc.db
+      # Route outbound HTTP(S) traffic through Xray. NO_PROXY keeps internal
+      # service-to-service calls direct.
+      HTTPS_PROXY: "http://xray:1080"
+      HTTP_PROXY:  "http://xray:1080"
+      NO_PROXY:    "localhost,127.0.0.1,backend,frontend,nginx,xray"
+    depends_on:
+      - xray
     restart: unless-stopped
 
   frontend:

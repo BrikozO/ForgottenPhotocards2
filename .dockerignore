@@ -1,0 +1,13 @@
+# Keep build contexts lean and prevent secrets leaking into the daemon.
+.git
+.gitignore
+.idea
+.venv
+.claude
+.DS_Store
+__pycache__
+*.pyc
+docs
+nginx/certs
+xray
+README.md

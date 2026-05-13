@@ -35,11 +35,10 @@ function FeedPage({ posts, route, onNav, subs = 0 }) {
           <h1 className="fpc-hero-title">
             Забытые<br/>фотокарточки
           </h1>
-          <p className="fpc-hero-sub">
-            Архив плёночных и цифровых снимков Олега Якушева — города,
-            архитектура, лица. Каждый пост — отдельная плёнка или серия:
-            откройте, чтобы посмотреть все кадры и узнать, чем снято.
-          </p>
+          <blockquote className="fpc-hero-sub fpc-hero-quote">
+            «Приятнее всего дарить человеку не вещи, а воспоминания о&nbsp;чём‑то прожитом вместе».
+            <cite>— Одри Тоту</cite>
+          </blockquote>
         </div>
         <div className="fpc-hero-side">
           <div className="fpc-hero-stat">
