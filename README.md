@@ -248,6 +248,6 @@ const TWEAK_DEFAULTS = {
 
 <div align="center">
 
-Сделано с любовью к плёнке и забытым кадрам · [t.me/forgottenphotocards](https://t.me/forgottenphotocards)
+Сделано с любовью к плёнке · [t.me/forgottenphotocards](https://t.me/forgottenphotocards)
 
 </div>
