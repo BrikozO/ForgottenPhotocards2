@@ -109,8 +109,7 @@ function AdminPage({ posts, onPostUpdated }) {
           </div>
           <h1 className="fpc-hero-title">Вход</h1>
           <p className="fpc-hero-sub" style={{ marginBottom: 24 }}>
-            Введите секретный токен. Он задаётся переменной окружения
-            <span className="mono"> FPC_ADMIN_TOKEN</span> на сервере.
+            <span className="mono">Введите секретный токен.</span>
           </p>
           <form onSubmit={submitLogin} className="fpc-admin-form">
             <label className="fpc-admin-label">

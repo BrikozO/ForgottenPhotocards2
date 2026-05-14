@@ -151,7 +151,7 @@ function Footer({ mobile = false }) {
       <div className="fpc-footer-inner">
         <div className="fpc-footer-brand">
           <Logo compact={mobile}/>
-          <div className="fpc-footer-by">© {new Date().getFullYear()} · Oleg Iakushev</div>
+          <div className="fpc-footer-by">© {new Date().getFullYear()} · 1020 Tech</div>
         </div>
         <div className="fpc-footer-cols">
           <div>
