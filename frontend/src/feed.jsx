@@ -4,11 +4,34 @@ const { useMemo, useState: useState_F } = React;
 
 function FeedPage({ posts, route, onNav, subs = 0 }) {
   const filter = route.filter || null;
+  const [sort, setSort] = useState_F('desc'); // 'desc' = новые сначала, 'asc' = старые сначала
+  const gridRef = useRef(null);
 
   const filtered = useMemo(() => {
-    if (!filter) return posts;
-    return posts.filter((p) => p.type === filter);
-  }, [posts, filter]);
+    const base = filter ? posts.filter((p) => p.type === filter) : posts;
+    const arr = base.slice();
+    arr.sort((a, b) => {
+      const da = a.date ? new Date(a.date).getTime() : 0;
+      const db = b.date ? new Date(b.date).getTime() : 0;
+      const diff = db - da;
+      const tie = (Number(b.id) || 0) - (Number(a.id) || 0);
+      const ordered = diff !== 0 ? diff : tie;
+      return sort === 'desc' ? ordered : -ordered;
+    });
+    return arr;
+  }, [posts, filter, sort]);
+
+  // Replay the card-pop animation each time the order changes.
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    el.classList.remove('is-sorted-anim');
+    // Force reflow so the animation restarts on consecutive toggles.
+    void el.offsetWidth;
+    el.classList.add('is-sorted-anim');
+  }, [sort, filter]);
+
+  const toggleSort = () => setSort((s) => (s === 'desc' ? 'asc' : 'desc'));
 
   const counts = useMemo(() => ({
     all: posts.length,
@@ -58,13 +81,24 @@ function FeedPage({ posts, route, onNav, subs = 0 }) {
 
       <div className="fpc-toolbar">
         <FilterChips active={filter} onChange={(id) => onNav({ view: 'feed', filter: id || undefined })} counts={counts}/>
-        <div className="fpc-sort">
+        <button
+          type="button"
+          className="fpc-sort fpc-sort-toggle"
+          onClick={toggleSort}
+          data-sort={sort}
+          aria-label={sort === 'desc' ? 'Сначала новые. Переключить на сначала старые.' : 'Сначала старые. Переключить на сначала новые.'}
+        >
           <span>Сначала</span>
-          <b>новые</b>
-        </div>
+          <span className="fpc-sort-flip">
+            <b key={sort}>{sort === 'desc' ? 'новые' : 'старые'}</b>
+          </span>
+          <svg className="fpc-sort-arrow" width="9" height="11" viewBox="0 0 9 11" fill="none" aria-hidden="true">
+            <path d="M4.5 0.5V10M4.5 10L1 6.5M4.5 10L8 6.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </div>
 
-      <div className="fpc-grid">
+      <div className="fpc-grid" ref={gridRef}>
         {filtered.map((post) => (
           <PostCard key={post.id} post={post} onOpen={(id) => onNav({ view: 'post', id })}/>
         ))}
