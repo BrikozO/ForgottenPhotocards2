@@ -32,6 +32,7 @@ SessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSe
 # Keep entries idempotent (PRAGMA-check, then ALTER if absent).
 _PENDING_COLUMNS: tuple[tuple[str, str, str], ...] = (
     ("photos", "tg_url", "TEXT"),
+    ("posts", "description_edited", "BOOLEAN NOT NULL DEFAULT 0"),
 )
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import date as date_t, datetime as datetime_t
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from backend.app.models import PostType
 
@@ -43,6 +43,7 @@ class PostOut(BaseModel):
 
     models: list[str] | None = None
     reactions: dict[str, int] | None = None
+    description_edited: bool = False
 
     photos: list[PhotoOut]
 
@@ -62,8 +63,21 @@ class PostOut(BaseModel):
             views=post.views,
             models=post.models_json,
             reactions=post.reactions_json,
+            description_edited=bool(getattr(post, "description_edited", False)),
             photos=[PhotoOut.model_validate(ph) for ph in post.photos],
         )
+
+
+class PostUpdateIn(BaseModel):
+    """Admin-editable subset of a Post. Both fields optional — PATCH semantics.
+
+    `description` is the post caption shown on the frontend; once set here, the
+    scraper stops overwriting it (see Post.description_edited).
+    `type` toggles between film and digital.
+    """
+
+    description: str | None = Field(default=None)
+    type: PostType | None = None
 
 
 class ChannelMetaOut(BaseModel):

@@ -31,6 +31,10 @@ services:
       - backend_data:/srv/backend/data
     environment:
       FPC_DATABASE_URL: sqlite+aiosqlite:////srv/backend/data/fpc.db
+      # Shared secret for the /admin panel. Sourced from the project-root .env
+      # (see .env.example). Compose substitutes ${FPC_ADMIN_TOKEN}; empty value
+      # disables the admin endpoints (they respond 503).
+      FPC_ADMIN_TOKEN: "${FPC_ADMIN_TOKEN:-}"
       # Route outbound HTTP(S) traffic through Xray. NO_PROXY keeps internal
       # service-to-service calls direct.
       HTTPS_PROXY: "http://xray:1080"

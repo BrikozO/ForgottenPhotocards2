@@ -27,7 +27,7 @@ RUN set -e; \
       echo 'const { useState, useEffect, useRef, useCallback, useMemo } = React;'; \
       echo 'const useState_F = useState, useStateA = useState, useEffectA = useEffect;'; \
       for f in tweaks-panel.jsx src/components.jsx src/carousel.jsx \
-               src/feed.jsx src/post.jsx src/app.jsx src/boot.jsx; do \
+               src/feed.jsx src/post.jsx src/admin.jsx src/app.jsx src/boot.jsx; do \
         sed -E '/^[[:space:]]*const[[:space:]]*\{[^}]*\}[[:space:]]*=[[:space:]]*React;[[:space:]]*$/d' "$f"; \
       done; \
     } > /tmp/bundle.jsx && \

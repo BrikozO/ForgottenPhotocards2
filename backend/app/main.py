@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import hmac
 import json
 import logging
 import os
@@ -12,7 +13,7 @@ from pathlib import Path
 import uvicorn
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -30,7 +31,7 @@ logging.getLogger("apscheduler").setLevel(logging.INFO)
 
 from backend.app.db import SessionLocal, init_db  # noqa: E402
 from backend.app.models import ChannelMeta, Post  # noqa: E402
-from backend.app.schemas import AuthorOut, ChannelMetaOut, PostOut  # noqa: E402
+from backend.app.schemas import AuthorOut, ChannelMetaOut, PostOut, PostUpdateIn  # noqa: E402
 from backend.app.scraper import sync_channel  # noqa: E402
 
 # Sibling to seed_posts.json — kept inside the package so docker-compose's
@@ -48,6 +49,31 @@ logger = logging.getLogger(__name__)
 # Cron expression for the daily resync. Defaults to 03:00 UTC.
 # Format: "minute hour day month dow" (standard 5-field cron).
 SYNC_CRON = os.getenv("FPC_SYNC_CRON", "0 3 * * *")
+
+# Shared secret for the /admin panel. If empty, admin endpoints respond 503 so
+# we don't ship a footgun where missing env silently allows access.
+ADMIN_TOKEN = os.getenv("FPC_ADMIN_TOKEN", "").strip()
+
+
+def _check_admin(authorization: str | None) -> None:
+    if not ADMIN_TOKEN:
+        # Misconfiguration is a server problem, not the client's — surface it
+        # clearly instead of returning a confusing 401.
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="admin disabled (FPC_ADMIN_TOKEN unset)",
+        )
+    expected = f"Bearer {ADMIN_TOKEN}"
+    if not authorization or not hmac.compare_digest(authorization, expected):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="invalid admin token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+async def require_admin(authorization: str | None = Header(default=None)) -> None:
+    _check_admin(authorization)
 
 
 def _build_scheduler() -> AsyncIOScheduler:
@@ -107,7 +133,7 @@ if cors_env:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[o.strip() for o in cors_env.split(",") if o.strip()],
-        allow_methods=["GET"],
+        allow_methods=["GET", "PATCH", "POST"],
         allow_headers=["*"],
     )
 
@@ -146,6 +172,39 @@ async def get_post(post_id: int, session: AsyncSession = Depends(get_session)) -
     post = await session.get(Post, post_id)
     if post is None:
         raise HTTPException(status_code=404, detail="post not found")
+    return PostOut.from_orm_post(post)
+
+
+# ─── Admin ───────────────────────────────────────────────────────
+# The /admin SPA route posts the token here on login so the frontend can
+# validate it before showing the editor. Returns 200 on success, 401 on bad
+# token, 503 if FPC_ADMIN_TOKEN isn't set in the environment.
+@app.post("/api/admin/login")
+async def admin_login(authorization: str | None = Header(default=None)) -> dict[str, bool]:
+    _check_admin(authorization)
+    return {"ok": True}
+
+
+@app.patch("/api/posts/{post_id}", response_model=PostOut)
+async def update_post(
+    post_id: int,
+    payload: PostUpdateIn,
+    session: AsyncSession = Depends(get_session),
+    _: None = Depends(require_admin),
+) -> PostOut:
+    post = await session.get(Post, post_id)
+    if post is None:
+        raise HTTPException(status_code=404, detail="post not found")
+
+    if payload.description is not None:
+        post.description = payload.description
+        # Once the admin touches the description, freeze it from the scraper.
+        post.description_edited = True
+    if payload.type is not None:
+        post.type = payload.type
+
+    await session.commit()
+    await session.refresh(post)
     return PostOut.from_orm_post(post)
 
 

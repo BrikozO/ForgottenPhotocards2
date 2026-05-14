@@ -1,0 +1,256 @@
+/* Admin panel — reuses the same dark palette / typography tokens as the
+   public site (see styles-base.css). Intentionally low-chrome: minimal
+   borders, monospace metadata, big editable surfaces. */
+
+.fpc-admin-shell {
+  padding-bottom: 80px;
+}
+
+/* ── Login screen ──────────────────────────────────────────────── */
+.fpc-admin-login {
+  padding: 56px 0 24px;
+  max-width: 520px;
+}
+
+/* ── Editor layout ─────────────────────────────────────────────── */
+.fpc-admin {
+  padding: 56px 0 24px;
+}
+.fpc-admin-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
+  margin-top: 32px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .fpc-admin-layout { grid-template-columns: 1fr; }
+}
+
+/* ── Sidebar (post picker) ─────────────────────────────────────── */
+.fpc-admin-sidebar {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 200px);
+  position: sticky;
+  top: 18px;
+}
+@media (max-width: 900px) {
+  .fpc-admin-sidebar { position: static; max-height: 60vh; }
+}
+
+.fpc-admin-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.fpc-admin-search input {
+  flex: 1;
+}
+.fpc-admin-search-hint {
+  color: var(--text-mute);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.fpc-admin-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+.fpc-admin-list li {
+  cursor: pointer;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.12s ease;
+}
+.fpc-admin-list li:hover {
+  background: var(--bg-elev-2);
+}
+.fpc-admin-list li[data-active="1"] {
+  background: var(--bg-elev-2);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+.fpc-admin-list-top {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+  color: var(--text-mute);
+  font-size: 11px;
+}
+.fpc-admin-list-title {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: var(--title-w);
+  letter-spacing: var(--title-track);
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.fpc-admin-list-sub {
+  font-size: 11px;
+  color: var(--text-mute);
+}
+.fpc-admin-list-empty {
+  padding: 18px 14px;
+  color: var(--text-mute);
+  font-size: 13px;
+  text-align: center;
+}
+
+.fpc-admin-edited-pill {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(217, 200, 168, 0.14);
+  color: var(--accent);
+  border: 1px solid rgba(217, 200, 168, 0.3);
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+/* ── Editor pane ───────────────────────────────────────────────── */
+.fpc-admin-editor {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-elev);
+  padding: 24px;
+}
+.fpc-admin-empty {
+  color: var(--text-mute);
+  font-size: 14px;
+  padding: 24px 0;
+}
+.fpc-admin-editor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.fpc-admin-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.fpc-admin-title {
+  font-family: var(--font-title);
+  font-weight: var(--title-w);
+  letter-spacing: var(--title-track);
+  font-size: 28px;
+  line-height: 1.1;
+  margin: 0;
+}
+.fpc-admin-preview {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--bg-elev-2);
+  display: block;
+  border: 1px solid var(--line);
+}
+.fpc-admin-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ── Form primitives ───────────────────────────────────────────── */
+.fpc-admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.fpc-admin-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fpc-admin-label > span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  display: inline-flex;
+  align-items: center;
+}
+
+.fpc-admin-input {
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.12s ease, background 0.12s ease;
+  width: 100%;
+}
+.fpc-admin-input:focus {
+  border-color: var(--accent);
+  background: var(--bg-elev-2);
+}
+.fpc-admin-textarea {
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.55;
+  font-family: var(--font-body);
+}
+
+.fpc-admin-radios {
+  display: flex;
+  gap: 8px;
+}
+.fpc-admin-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-dim);
+  transition: all 0.15s;
+}
+.fpc-admin-radio:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+.fpc-admin-radio input {
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.fpc-admin-hint {
+  font-size: 11px;
+  color: var(--text-mute);
+}
+.fpc-admin-err {
+  color: #ff7a7a;
+  font-size: 13px;
+}
+.fpc-admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+.fpc-admin-actions .fpc-tg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

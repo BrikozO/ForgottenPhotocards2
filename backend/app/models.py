@@ -3,7 +3,7 @@ from __future__ import annotations
 import enum
 from datetime import date as date_t, datetime as datetime_t
 
-from sqlalchemy import DateTime, Date, Enum, ForeignKey, Integer, JSON, String, Text
+from sqlalchemy import Boolean, DateTime, Date, Enum, ForeignKey, Integer, JSON, String, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -36,6 +36,11 @@ class Post(Base):
 
     location: Mapped[str | None] = mapped_column(String, nullable=True)
     description: Mapped[str] = mapped_column(Text, nullable=False, default="", server_default="")
+    # Set true when the description has been edited via the admin panel — the
+    # scraper must then leave it alone on subsequent syncs.
+    description_edited: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="0"
+    )
 
     camera: Mapped[str | None] = mapped_column(String, nullable=True)
     lens: Mapped[str | None] = mapped_column(String, nullable=True)

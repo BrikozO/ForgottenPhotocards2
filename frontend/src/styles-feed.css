@@ -271,16 +271,12 @@
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-mute);
+  color: var(--accent);
   padding: 3px 7px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(217, 200, 168, 0.3);
   border-radius: 2px;
   white-space: nowrap;
   flex-shrink: 0;
-}
-.fpc-card-type[data-type="film"] {
-  color: var(--accent);
-  border-color: rgba(217, 200, 168, 0.3);
 }
 
 .fpc-card-sub {

@@ -124,6 +124,7 @@ function parseRoute() {
   }
   if (parts.length === 1) {
     if (parts[0] === 'about')   return { view: 'about' };
+    if (parts[0] === 'admin')   return { view: 'admin' };
     if (parts[0] === 'film')    return { view: 'feed', filter: 'film' };
     if (parts[0] === 'digital') return { view: 'feed', filter: 'digital' };
   }
@@ -132,6 +133,7 @@ function parseRoute() {
 function routeToUrl(r) {
   if (r.view === 'post')  return `/post/${r.id}`;
   if (r.view === 'about') return '/about';
+  if (r.view === 'admin') return '/admin';
   if (r.filter)           return `/${r.filter}`;
   return '/';
 }
@@ -195,10 +197,17 @@ function App() {
     root.style.setProperty('--logo-w', typo.logoWeight);
   }, [t.typography]);
 
-  const safePosts = Array.isArray(POSTS) ? POSTS : [];
+  // Hold posts in state so admin edits propagate to the feed/post views
+  // without a reload. Initial value is the boot snapshot from window.POSTS.
+  const [posts, setPosts] = useStateA(() => Array.isArray(POSTS) ? POSTS : []);
+  const safePosts = posts;
   const channel = (typeof window !== 'undefined' && window.CHANNEL) || {};
   const author = (typeof window !== 'undefined' && window.AUTHOR) || null;
   const subs = Number(channel.subscribers) || 0;
+
+  const replacePost = (updated) => {
+    setPosts((prev) => prev.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)));
+  };
 
   const post = route.view === 'post' ? safePosts.find((p) => p.id === route.id) : null;
   // A post route pointing at a missing id is effectively a dead link → 404.
@@ -229,6 +238,9 @@ function App() {
       )}
       {route.view === 'about' && (
         <AboutPage posts={safePosts} author={author} subs={subs} onNav={navigate}/>
+      )}
+      {route.view === 'admin' && (
+        <AdminPage posts={safePosts} onPostUpdated={replacePost}/>
       )}
       {(route.view === 'notfound' || isMissingPost) && <NotFoundPage/>}
 

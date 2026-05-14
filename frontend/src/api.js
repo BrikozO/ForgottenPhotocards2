@@ -35,6 +35,43 @@
     }
   }
 
+  // ── Admin ─────────────────────────────────────────────────────
+  // Token-based auth — every admin request sends `Authorization: Bearer <t>`.
+  // The token is held in component state only (no localStorage), so closing
+  // the tab logs the admin out.
+  function _adminHeaders(token) {
+    return {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    };
+  }
+
+  async function adminLogin(token) {
+    const res = await fetch(API_BASE + '/admin/login', {
+      method: 'POST',
+      headers: _adminHeaders(token),
+    });
+    if (res.status === 401) return { ok: false, error: 'Неверный токен' };
+    if (res.status === 503) return { ok: false, error: 'Админ-панель отключена на сервере' };
+    if (!res.ok)            return { ok: false, error: 'Ошибка ' + res.status };
+    return { ok: true };
+  }
+
+  async function adminUpdatePost(token, postId, patch) {
+    const res = await fetch(API_BASE + '/posts/' + postId, {
+      method: 'PATCH',
+      headers: _adminHeaders(token),
+      body: JSON.stringify(patch),
+    });
+    if (!res.ok) {
+      let detail = '';
+      try { detail = (await res.json()).detail || ''; } catch (_) {}
+      throw new Error('PATCH /posts/' + postId + ' failed: ' + res.status + (detail ? ' — ' + detail : ''));
+    }
+    return await res.json();
+  }
+
   // Author: { name, bio[], base, shooting_since, channel_since, cameras,
   //          email, telegram }. Optional — if missing, AboutPage uses
   // baked-in fallback copy.
@@ -88,5 +125,9 @@
     },
   };
 
-  Object.assign(window, { loadPosts, loadChannel, loadAuthor, TYPOGRAPHY_PRESETS, API_BASE });
+  Object.assign(window, {
+    loadPosts, loadChannel, loadAuthor,
+    adminLogin, adminUpdatePost,
+    TYPOGRAPHY_PRESETS, API_BASE,
+  });
 })();

@@ -78,20 +78,25 @@ async def _upsert_post(
         return "inserted"
 
     # Update mutable fields. Captions can be edited; views/reactions drift.
-    changed = False
-    for field, value in (
+    # If the description was edited via the admin panel, leave it alone — the
+    # admin's version is the source of truth from that point on.
+    updates: list[tuple[str, object]] = [
         ("title", sp.title),
         ("date", sp.date),
         ("time", sp.time),
         ("location", sp.location),
-        ("description", sp.description or ""),
         ("camera", sp.camera),
         ("lens", sp.lens),
         ("film", sp.film),
         ("views", sp.views),
         ("models_json", sp.models),
         ("reactions_json", sp.reactions),
-    ):
+    ]
+    if not existing.description_edited:
+        updates.append(("description", sp.description or ""))
+
+    changed = False
+    for field, value in updates:
         if getattr(existing, field) != value:
             setattr(existing, field, value)
             changed = True
