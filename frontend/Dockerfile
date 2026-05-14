@@ -45,6 +45,7 @@ COPY nginx.conf /etc/nginx/conf.d/app.conf
 # JSX is no longer served — only the .js outputs from the builder stage.
 RUN mkdir -p /usr/share/nginx/html/src
 COPY index.html               /usr/share/nginx/html/index.html
+COPY favicon.svg              /usr/share/nginx/html/favicon.svg
 COPY src/api.js               /usr/share/nginx/html/src/api.js
 COPY src/*.css                /usr/share/nginx/html/src/
 COPY --from=builder /build/app.js /usr/share/nginx/html/app.js
